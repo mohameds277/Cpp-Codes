@@ -5,4 +5,4 @@
 
 ##### implementing C++ data strucutres from scratch .
 
-[x] Vector 
+-[x] Vector 
