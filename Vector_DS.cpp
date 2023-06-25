@@ -194,7 +194,43 @@ void insert ( int index , int value )
                                                                 
 }
 
-void right_rotation()   // rotate fucntion to rotate the whole vector array by 1 without affecting the capacity or size ( only changing in places)
+void pop(int index)
+{
+    assert(0 <= index && index < size);     // making sure the indies of the array are within the legal  declared range
+
+    int deleted_value = arr[index];
+
+    for (int i = index + 1; i < size; ++i)
+    {
+        arr[i - 1] = arr[i];
+    }
+    --size;
+}
+
+// this fucntion helps imporve searching overtime , close to search history , everytime this function is
+// used to find a certain element , this element get shifted 1 step left , so next time the time to find it 
+// become less , Note : the left shift without rotaion when reached to the start 
+int find_with_history(int value)
+{
+    for (int i = 0; i < size; ++i)
+    {
+        if(arr[i] == value)
+        {
+            if ( i == 0 )
+                return 0;         // element already at the top 
+
+        swap(arr[i], arr[i - 1]); // swap it with the element before
+        return i - 1; 
+    }
+    return -1; // no element found 
+}
+}
+
+//rotation functions
+// only changes the rotation order of elements without affecting the size of capacity 
+
+// rotation fucntion to rotate the whole vector array by 1 without affecting the capacity or size ( only changing in places)
+void right_rotation()  
 {
 
     int last_element_buffer = arr[size - 1]; 
@@ -205,7 +241,39 @@ void right_rotation()   // rotate fucntion to rotate the whole vector array by 1
     arr[0] = last_element_buffer; 
 }
 
+// left rotation fucntion rotates the set of vector array to the left 1 step 
+void left_rotation()
+{
+    int first_element = arr[0];
 
+    for (int i = 1; i < size; ++i)
+    {
+        arr[i - 1 ] = arr[i];
+    }
+    arr[size - 1] = first_element;
+}
+
+// rotation right n time 
+void right_rotation(int n_time)      //function overload 
+{
+    n_time = n_time % size;     //to optimize the n_times if it it's greater than the size to prevent 
+    while (n_time--)                                // rotation repetition meaning if rotation time is 10 
+    {                                                                        // for list sized 5 
+        right_rotation();                                                       // the roation is the same
+    }
+}
+
+// rotation left n time 
+void left_rotation(int n_time)      //function overload 
+{
+    n_time = n_time % size;         //to optimize the n_times if it it's greater than the size to prevent 
+    while (n_time--)                    // rotation repetition meaning if rotation time is 10 
+    {                                                 // for list sized 5
+        left_rotation();                                     // the roation is the same as the list original 
+    }                                                                                              // order
+}
+
+//// always make sure that the shifted value does't overwrite the adjecent value -> loss of data  
 };
 
 
@@ -242,17 +310,33 @@ int main()
 
     cout << endl;
 
-    v.print();  // print test of the filled Vector , must print number from 0 to 9 + the appended numbers
+    cout << "vector list print test : ";
+    v.print(); // print test of the filled Vector , must print number from 0 to 9 + the appended numbers
+
 
     v.insert(2, 50);
-
+    cout << "vector insertion list print test : ";
     v.print();
 
+    cout << "vector right rotate list print test : ";
     v.right_rotation();
     v.print();
 
-    cout<< v.find(5) << " " << v.find(10); // find a certian value within the Vector v
+    cout << "vector left rotate list print test : ";
+    v.left_rotation();
+    v.print();
 
-    return 0;
+
+    cout << "vector right rotate 5 times  list print test : ";
+    v.right_rotation(5);
+    v.print();
+
+    cout << "vector left rotate 5 times  list print test : ";
+    v.left_rotation(5);
+    v.print();
+
+    cout << v.find(5) << " " << v.find(10); // find a certian value within the Vector v
+
+       return 0;
 
 }
