@@ -46,7 +46,7 @@ class Vector
 
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //// CLASS METHOD/FUNCTIONS/////////////////////////////////
+        //// CLASS Constructor/Deconstructor /////////////////////////////////
     public : 
         Vector(int size) : size(size)          // member initialization  list with size value (0) as above 
         {               
@@ -337,6 +337,7 @@ int main()
 
     cout << v.find(5) << " " << v.find(10); // find a certian value within the Vector v
 
-       return 0;
+    
+    return 0;
 
 }
