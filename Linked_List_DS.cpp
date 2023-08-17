@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 //Building block of each node of the linked list 
 #include <iostream>
 
@@ -246,5 +246,4 @@ int main()
 
     // base linked_list ADT + ending append + printing list : functional and tested.
     return 0;
->>>>>>> cd8273c5c14aacdf13663847f5656a1f2380907c
 }
