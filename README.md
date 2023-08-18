@@ -6,4 +6,4 @@
 ##### implementing C++ data strucutres from scratch .
 
 - [x] Vector
-- [ ] Linked-list ( Work-on-progress) 
+- [ ] Linked-list ( Work-in-progress) 
