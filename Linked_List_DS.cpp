@@ -131,17 +131,17 @@ class Linked_list
       return -1;
     }
 
-    int search_improved_v2(int value) {
-      int idx = 0;
+    int search_v3(int value) {// same as before optimization but with better code writing convention convention 
+      int index = 0;                //  previous  node stacked in the for body 
 
-      for (Node *cur = head, *prv = nullptr; cur; prv = cur, cur = cur->next) {
-        if (cur->data == value) {
-          if (!prv)
-            return idx;
-          swap(prv->data, cur->data);
-          return idx - 1;
+      for (Node *current_node = head, *previous_node = nullptr; current_node ; previous_node = current_node, current_node = current_node->next) {
+        if (current_node->data == value) {
+          if (!previous_node)
+            return index;
+          swap(previous_node->data, current_node->data);
+          return index - 1;
         }
-        ++idx;
+        ++index;
       }
       return -1;
     }
@@ -183,7 +183,7 @@ int main()
 ///////////////////////////////////////////TESTING get_position() method ////////////
   Node* temp_pointer_node{nullptr};
 
-  temp_pointer_node = listA.get_position(0);
+  temp_pointer_node = listA.get_position(1);
   if (!temp_pointer_node)
     cout << "node not found ";
 
@@ -191,11 +191,20 @@ int main()
     cout << temp_pointer_node->data ; 
 ///////////////////////////////////////////TESTING get_position() method ////////////
 
+  cout << endl; 
+  int position;
+  position = listA.search_v1(5);
+  cout << position << endl;
+  position = listA.search_v2(5);
+  cout << position << endl;
+  position = listA.search_v3(5);
+  cout << position << endl;
 
+  listA.print();    // survey the change on the list , see when you search for a certain elements , the position gets shifted into the left 
+            // indicating how the element gets more frequent so it means it will be found more faster next time 
 
-
-
-
+            
+             
   // base linked_list ADT + ending append + printing list : functional and tested.
   return 0;
 }
