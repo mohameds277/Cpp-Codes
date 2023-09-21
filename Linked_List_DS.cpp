@@ -90,10 +90,14 @@ class Linked_list
       --list_length;
     }
 
-    Node* get_position(int position) {     // returns the element based on the position
+    //////////// Searching Section //////////////////////////////// 3 Methods (get_position -> based on given postion  )
+                                                                            // ( search_v1 based on iterating   )
+                                                                            //  ( seach_v2 based on before but optimized )
+    Node* get_position(int position) {     // returns the element based on it's position
       int node_counter = 0;
+
       for (Node* current_node = head; current_node ; current_node = current_node->next)
-        if (++node_counter == position)
+        if (++node_counter == position)     // this will make sure that the count starts from 1 ( if 0 then change it into node_counter++)
           return current_node;
 
       return nullptr;
@@ -101,26 +105,29 @@ class Linked_list
 
 
 
-    int search(int value) {
-      int idx = 0;
-      for (Node* cur = head; cur; cur = cur->next, idx++)
-        if (cur->data == value) // Common Mistake to use head
-          return idx;
+    int search_v1(int value) {      // Search in linked_list based on the value , iterates through the lined-list until target is found
+      int index = 0;
+      for (Node* current_node = head; current_node; current_node = current_node->next, index++)
+        if (current_node->data == value) 
+          return index;
       return -1;
     }
 
-    int search_improved(int value) {
-      int idx = 0;
-      Node *prv = nullptr;  // let's keep pointer of prv
-      for (Node* cur = head; cur; cur = cur->next, idx++) {
-        if (cur->data == value) {
-          if (!prv)
-            return idx;
-          swap(prv->data, cur->data);
-          return idx - 1;
+    int search_v2(int value) {  // improved version , search using previous nodes 
+      int index = 0;
+
+      Node *previous_node = nullptr;  // making a new empty node to store previous node state 
+
+      for (Node* current_node = head; current_node ; current_node = current_node->next, index++) {  // case 1 : best case , found on first search 
+        if (current_node->data == value) {                                                          // prev_node is still null and index is returned
+          if (!previous_node)                                                                       
+            return index;                                                                           // case 2 : found on n-th iterate , prev_node filled with current node 
+          swap(previous_node->data, current_node->data);                                            // target found !! , prev node is not null , then swap or sent current node data into preve data 
+          return index - 1;                                                                         // return prev address ( index - 1 )
         }
-        prv = cur;
+        previous_node = current_node;
       }
+
       return -1;
     }
 
@@ -138,6 +145,7 @@ class Linked_list
       }
       return -1;
     }
+    //////////// Searching Section ENDED ////////////////////////////////
 };
 
 
@@ -172,12 +180,18 @@ int main()
 
   cout << endl;
 
+///////////////////////////////////////////TESTING get_position() method ////////////
   Node* temp_pointer_node{nullptr};
 
-  temp_pointer_node = listA.get_position(1);
-
+  temp_pointer_node = listA.get_position(0);
   if (!temp_pointer_node)
     cout << "node not found ";
+
+  else
+    cout << temp_pointer_node->data ; 
+///////////////////////////////////////////TESTING get_position() method ////////////
+
+
 
 
 
