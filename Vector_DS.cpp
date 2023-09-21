@@ -1,11 +1,11 @@
 
-//This code is implementing and mimicing the stl::vector data structure  in C++ 
-////Fetures and notes  : 
+//This code is implementing and mimicking the stl::vector data structure  in C++ 
+////Features and notes  : 
 
 //          -Dynamic size
 //          -uses pointers 
-//          -user_defined data strucutre ( closer to STL vector )
-//          -functions implemented inside the class body ( no fucntion prototyping )
+//          -user_defined data structure ( closer to STL vector )
+//          -functions implemented inside the class body ( no function prototyping )
 
 
 #include <iostream>
@@ -23,10 +23,10 @@ class Vector
     private :
         int *arr {nullptr};                
         int size {0};   // user's size 
-        int capacity{}; // actual size (behind the scene size)             <----- for better performence
+        int capacity{}; // actual size (behind the scene size)             <----- for better performance 
 
                           
-        void capacity_expander()          //following function of the enhanced push_back() function ( made it private becuae if the evil foruces got their hands on this fucntion the whole array
+        void capacity_expander()          //following function of the enhanced push_back() function ( made it private because if the evil forces got their hands on this function the whole array
         {                                                                                                                                               // world will be at risk :|)
             capacity = capacity * 2;
 
@@ -52,7 +52,7 @@ class Vector
         {               
 
             if ( size < 0 )                                                                                     
-                size = 1;             // for preventing memeory size errors
+                size = 1;             // for preventing memory size errors
             capacity = size + 10;                                                        // CLASS DE/CONSTRUCTOR
             arr = new int[capacity]{};      //dynamic allocation of an array for dynamic sizing 
 
@@ -60,8 +60,8 @@ class Vector
 
         ~Vector ()
         {
-            delete[] arr;               // dellocating the array ( opposite of new[])   // delete the data
-            arr = nullptr;              // nullpointer to prevent dangling pointers     // delete the  pointer 
+            delete[] arr;               // de-allocating the array ( opposite of new[])   // delete the data
+            arr = nullptr;              // null-pointer to prevent dangling pointers     // delete the  pointer 
         }
 
 
@@ -71,7 +71,7 @@ class Vector
 
 // BASE DS OPERATIONS/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// return the desired index valye , before the return index validation must be checked to prevent returning illegal address
+// return the desired index value , before the return index validation must be checked to prevent returning illegal address
     int get(int index)
     {                                                                                              
             assert(0 <= index && index < size);
