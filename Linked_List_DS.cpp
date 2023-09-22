@@ -1,6 +1,9 @@
 
 //Building block of each node of the linked list
 #include <iostream>
+#include<cassert>
+
+
 
 
 using std::endl;
@@ -146,6 +149,35 @@ class Linked_list
       return -1;
     }
     //////////// Searching Section ENDED ////////////////////////////////
+
+
+    void integrity_verify()
+    {
+        if ( list_length == 0 )    // EMPTY LIST INTEGRITY TEST 
+         // if the list is empty then the head and the tail must be nulled ,they don't point at anything YET ! 
+        {
+            assert(head == nullptr );   //  no head yet
+            assert(tail == nullptr);    // no tail yet 
+        }
+        else   // NON EMPTY LIST INTEGRITY TEST 
+            {
+                assert(head != nullptr);    // there is a head 
+                assert(tail != nullptr);    // there is a tail 
+
+                if(list_length == 1 )   // if the list is only 1 node case 
+                {
+                    assert(head == tail );  // head and tail pointers must point at the same node 
+                }
+                else    // list is > 1 length 
+                {
+                    assert( head != tail ); // head and tail are different pointers 
+                }
+                    // end of the list integrity test 
+                    assert(!tail->next); // the next node of the tail is the end of the list ( nullptr)
+
+                }
+
+    }
 };
 
 
