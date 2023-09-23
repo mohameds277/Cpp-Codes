@@ -1,14 +1,17 @@
 
 //Building block of each node of the linked list
-#include <iostream>
+#include<iostream>
 #include<cassert>
-
+#include<string>
+#include<sstream>
 
 
 
 using std::endl;
 using std::cout;
 using std::swap;
+using std::string;
+using std::ostringstream;
 
 struct Node
 {
@@ -16,7 +19,19 @@ struct Node
   struct Node *next {};
 
   Node(int data ) : data(data) {}     // every time a new node is constructed then
-};                                      // a node with data and next is nulled like below node
+                                                // a node with data and next is nulled like below node
+
+  ~Node()
+  {
+      cout << " Destroying the node " << data << " that belong to the node address " << this << endl;
+  }
+
+
+
+
+};                                    
+
+
 //  ---------------------
 //  | Data    | next_ptr| --> nullptr
 //  ---------------------
@@ -176,6 +191,31 @@ class Linked_list
                     assert(!tail->next); // the next node of the tail is the end of the list ( nullptr)
 
                 }
+            // length integrity test 
+            int length_indicator{};
+
+            for( Node *current_node = head ; current_node  ; current_node =  current_node->next , length_indicator++ )
+            {
+                assert(length_indicator < 10000);   
+            }
+            assert( list_length == length_indicator);
+         //   assert(list_length == (int)debug_data.size());
+
+    }
+
+    string to_string()
+    {
+      if(list_length == 0 ) return " ";   // empty list return empty string 
+
+      ostringstream oss ; 
+
+      for ( Node *current_node = head ; current_node ; current_node = current_node->next)
+      {
+          oss << current_node->data;
+          if(current_node->next)
+            oss << " " ; 
+      }
+      return oss.str();
 
     }
 };
@@ -232,9 +272,16 @@ int main()
   position = listA.search_v3(5);
   cout << position << endl;
 
-  listA.print();    // survey the change on the list , see when you search for a certain elements , the position gets shifted into the left 
+  //listA.print();    // survey the change on the list , see when you search for a certain elements , the position gets shifted into the left 
             // indicating how the element gets more frequent so it means it will be found more faster next time 
 
+  string buffer ; 
+
+  buffer = listA.to_string();
+
+  cout << buffer ; 
+
+  
             
              
   // base linked_list ADT + ending append + printing list : functional and tested.
