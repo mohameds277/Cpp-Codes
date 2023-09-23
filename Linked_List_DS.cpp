@@ -4,8 +4,7 @@
 #include<cassert>
 #include<string>
 #include<sstream>
-#include <algorithm>
-
+#include<algorithm>
 #include<vector>
 
 
@@ -23,16 +22,13 @@ struct Node
   int data{} ;                // initialized to zero to prevent garbage value initialization
   struct Node *next {};
 
-  Node(int data ) : data(data) {}     // every time a new node is constructed then
+  Node(int data) : data(data) {}     // every time a new node is constructed then
                                                 // a node with data and next is nulled like below node
-
   ~Node()
   {
       cout << " Destroying the node " << data << " that belong to the node address " << this << endl;
   }
-
 };                                    
-
 
 //  ---------------------
 //  | Data    | next_ptr| --> nullptr
@@ -46,7 +42,7 @@ class Linked_list
     Node *head{};           // head pointer of the list , indicates the list , and it's beginning
 
     //          HEAD
-    //  ---------------------
+    //  --------------------
     //  | 0    | next_ptr| --> nullptr
     //  --------------------
 
@@ -84,6 +80,8 @@ class Linked_list
 
   Linked_list() {}    // default constructor 
 
+
+  // to prevent copying ( unintended duplication of the object. ) , could be used as a singleton class design pattern 
   Linked_list(const Linked_list&) = delete;
   Linked_list &operator = (const Linked_list &another) = delete ; 
 
