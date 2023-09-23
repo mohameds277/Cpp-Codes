@@ -4,6 +4,9 @@
 #include<cassert>
 #include<string>
 #include<sstream>
+#include <algorithm>
+
+#include<vector>
 
 
 
@@ -12,6 +15,8 @@ using std::cout;
 using std::swap;
 using std::string;
 using std::ostringstream;
+using std::vector;
+using std::find;
 
 struct Node
 {
@@ -25,9 +30,6 @@ struct Node
   {
       cout << " Destroying the node " << data << " that belong to the node address " << this << endl;
   }
-
-
-
 
 };                                    
 
@@ -59,24 +61,77 @@ class Linked_list
 
     int list_length{} ;     // new idea : thinking in-progress
 
-  public:
-    void print()
+
+
+    vector<Node*> debug_data;   // backup , vector stores in it each struct node in term of list corruption . 
+
+
+    void add_node_vector(Node* node)
     {
+      debug_data.push_back(node);
+    }
 
-      Node *temp_node{nullptr};
+    void debug_remove_node(Node* node) 
+    {
+		auto delete_target = find(debug_data.begin(), debug_data.end(), node);
+		if (delete_target == debug_data.end())
+			cout << "Node does not exist\n";
+		else
+			debug_data.erase(delete_target);
+	}
 
-      temp_node = head ;              // head is very critical , mess with the head
-      // and the list goes boom
-      // mess with the head stunt double (temp_head)
-      while ( temp_node != nullptr)
-      {
-        cout << temp_node->data << "->";        // print the current node
+  public:
 
-        temp_node = temp_node->next;    // and then update to the next node
-      }
+  Linked_list() {}    // default constructor 
+
+  Linked_list(const Linked_list&) = delete;
+  Linked_list &operator = (const Linked_list &another) = delete ; 
+
+  void print()
+  {
+
+    Node *temp_node{nullptr};
+
+    temp_node = head ;              // head is very critical , mess with the head
+    // and the list goes boom
+    // mess with the head stunt double (temp_head)
+    while ( temp_node != nullptr)
+    {
+      cout << temp_node->data << "->";        // print the current node
+
+      temp_node = temp_node->next;    // and then update to the next node
+    }
       cout << "NULL(end of the list)" ;
       cout << endl;
 
+    }
+
+    void print_in_details(Node *node )
+    {
+      if(node == nullptr)
+      {
+        cout << "empty or end of the list ";
+        return ; 
+      }
+
+      cout << node->data << " " ; 
+      if( node->next == nullptr  )
+      {
+        cout << "X" ; 
+      }
+      else 
+        cout << node->next->data << "  "; 
+
+      if(node == head )
+      {
+        cout << "Head\n";
+      }
+      else if (node == tail)
+      {
+        cout << "tail\n" ; 
+      }
+      else 
+        cout << "\n";
     }
 
 
@@ -248,6 +303,16 @@ int main()
 
   listA.append_end(12134);
 
+  string true_values="1 2 3 4 5 6 534 12134";
+  string actual_values = listA.to_string();
+  if(true_values != actual_values)
+  {
+    cout << "List error , no match between the expected list and the actual resulting list \n"; 
+    cout << true_values << " is not matched with " << actual_values ;
+    assert(false);  // terminate immediately 
+  }
+
+  
   listA.print();
 
   cout << endl;
@@ -281,7 +346,7 @@ int main()
 
   cout << buffer ; 
 
-  
+
             
              
   // base linked_list ADT + ending append + printing list : functional and tested.
