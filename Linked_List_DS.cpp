@@ -17,7 +17,7 @@ using std::ostringstream;
 using std::vector;
 using std::find;
 
-struct Node
+struct Node // 8 bytes total ( 4 bytes for data , )
 {
   int data{} ;                // initialized to zero to prevent garbage value initialization
   struct Node *next {};
@@ -84,6 +84,40 @@ class Linked_list
   // to prevent copying ( unintended duplication of the object. ) , could be used as a singleton class design pattern 
   Linked_list(const Linked_list&) = delete;
   Linked_list &operator = (const Linked_list &another) = delete ; 
+
+
+  // Destructor 
+  ~Linked_list()
+  {
+    cout << "\nclearing the list from memory  ..... \n" ; 
+    
+    //HEADSHOT
+    // destroying nodes from the start to the end 
+    //make a temp node , assign it to the next node after the head node ->  shoot the head -> put a next target ( assign head into current )
+    // Repeat the KILLING STREAK 
+    // Time cComplex. = O(n) traversal through the whole list ocurred 
+    // Space Complex. = O(1)
+    
+    while (head)
+    {
+      Node *temp_target_node = head->next; 
+      delete head ; // HEADSHOT the head  
+      head = temp_target_node ; // new target 
+    }
+  }
+
+  void print_head()
+  {
+    cout << "head address : " <<  head << endl; 
+    cout << "head data : " << head->data << endl; 
+  }
+
+
+  void print_tail()
+  {
+    cout << "tail address : " <<  tail << endl; 
+    cout << "tail data : " << tail->data << endl;  
+     }
 
   void print()
   {
@@ -155,9 +189,27 @@ class Linked_list
 
     }
 
+    void append_beginning(int data)
+    {
+      Node *new_node = new Node(data);
+      new_node->next = nullptr;
+
+      if (!head)
+      {
+        head = tail = new_node ; 
+      }
+      else 
+      {
+        new_node->next = head;  
+        head = new_node;  
+        ++list_length; 
+      }
+
+
+    }
+
     void delete_end()       // stand-by ( future work )
     {
-
       --list_length;
     }
 
@@ -301,6 +353,9 @@ int main()
 
   listA.append_end(12134);
 
+
+
+
   string true_values="1 2 3 4 5 6 534 12134";
   string actual_values = listA.to_string();
   if(true_values != actual_values)
@@ -311,7 +366,11 @@ int main()
   }
 
   
+  listA.append_beginning(12);
+  listA.append_beginning(13);
+  
   listA.print();
+  listA.print_head();
 
   cout << endl;
 
