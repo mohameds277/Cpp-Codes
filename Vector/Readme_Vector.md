@@ -6,4 +6,4 @@
     
 * g++ Vector_DS.cpp <yourFilename.cpp> -o <yourProgramName.exe>
         
-* remove from <yourProgramName> .exe if you are using Linux/MacOS
+* remove from yourProgramName .exe if you are using Linux/MacOS
