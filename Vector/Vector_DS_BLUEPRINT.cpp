@@ -1,4 +1,4 @@
-
+// BLUEPRINT CONTAINING ALL DOCUMENTATION ( FOR READ-MODE ONLY ) WON'T COMPILE PROBABLY 
 //This code is implementing and mimicking the stl::vector data structure  in C++ 
 ////Features and notes  : 
 
@@ -8,7 +8,16 @@
 //          -functions implemented inside the class body ( no function prototyping )
 
 
-#include "vector_DS.h"
+
+#include <iostream>
+#include <cassert>
+
+
+
+using std::cout;
+using std::endl;
+using std::swap;
+
 
 class Vector 
 {
