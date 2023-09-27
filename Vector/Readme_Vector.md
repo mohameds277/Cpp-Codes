@@ -4,6 +4,6 @@
     
 ## on cmd or terminal type the following :
     
-### g++ Vector_DS.cpp <yourFilename.cpp> -o <yourProgramName>
+### g++ Vector_DS.cpp <yourFilename.cpp> -o /<yourProgramName>/
         
 ### add to <yourProgramName> .exe if you are using Windows Os
