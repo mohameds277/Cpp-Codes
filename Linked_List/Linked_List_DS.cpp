@@ -189,7 +189,7 @@ class Linked_list
 
     }
 
-    void append_beginning(int data)
+    void append_front(int data)
     {
       Node *new_node = new Node(data);
       new_node->next = nullptr;
@@ -211,6 +211,11 @@ class Linked_list
     void delete_end()       // stand-by ( future work )
     {
       --list_length;
+    }
+
+    void delete_front(int data )
+    {
+
     }
 
     //////////// Searching Section //////////////////////////////// 3 Methods (get_position -> based on given postion  )
@@ -356,7 +361,12 @@ int main()
 
 
 
-  string true_values="1 2 3 4 5 6 534 12134";
+
+  
+  listA.append_front(13);
+  listA.append_front(12);
+
+    string true_values="12 13 1 2 3 4 5 6 534 12134";
   string actual_values = listA.to_string();
   if(true_values != actual_values)
   {
@@ -365,9 +375,6 @@ int main()
     assert(false);  // terminate immediately 
   }
 
-  
-  listA.append_beginning(12);
-  listA.append_beginning(13);
   
   listA.print();
   listA.print_head();
