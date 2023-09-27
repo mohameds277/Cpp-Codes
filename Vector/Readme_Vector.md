@@ -4,6 +4,6 @@
     
 ## on cmd or terminal type the following :
     
-### g++ Vector_DS.cpp <yourFilename.cpp> -o <yourProgramName.exe>
+- g++ Vector_DS.cpp <yourFilename.cpp> -o <yourProgramName.exe>
         
-### remove from <yourProgramName> .exe if you are using Linux/MacOS
+- remove from <yourProgramName> .exe if you are using Linux/MacOS
