@@ -5,9 +5,9 @@
 int main()
 {
 
-    Vector v(10);             // initlized array with size 10 
+    Vector v(10);             // initalized array with size 10 
 
-    for (int i = 0; i < v.get_size();  ++i)        //fill each index array with same value of that inedex ( only fill first 10 places)
+    for (int i = 0; i < v.get_size();  ++i)        //fill each index array with same value of that index ( only fill first 10 places)
     {                                   // example : index -> 0 stores value -> 0 , index -> 1 stores value -> 1 
         v.set(i , i ) ; 
     }

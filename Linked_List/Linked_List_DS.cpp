@@ -7,8 +7,6 @@
 #include<algorithm>
 #include<vector>
 
-
-
 using std::endl;
 using std::cout;
 using std::swap;
@@ -16,6 +14,7 @@ using std::string;
 using std::ostringstream;
 using std::vector;
 using std::find;
+
 
 struct Node // 8 bytes total ( 4 bytes for data , )
 {
@@ -106,6 +105,8 @@ class Linked_list
     }
   }
 
+
+// Printing operations section
   void print_head()
   {
     cout << "head address : " <<  head << endl; 
@@ -166,6 +167,10 @@ class Linked_list
         cout << "\n";
     }
 
+// END OF Printing operations section
+//////////////////////////////////////////////
+
+// inserting ( appending ) operations section 
 
     void append_end(int data)           // only the tail will be used
     {
@@ -208,15 +213,67 @@ class Linked_list
 
     }
 
+
+    
+// END OF inserting ( appending ) operations section 
+//////////////////////////////////////////////
+
+
+
+// Deleting  ( removing ) operations section 
+
     void delete_end()       // stand-by ( future work )
     {
-      --list_length;
+      if ( head == nullptr )
+      {
+        cout << "list is empty , aborting deletion\n";
+        return ; 
+      }
+
+
+      
+      Node *temp_node = head ;
+      if ( head == tail )       // one element in the list , delete whole list 
+      {
+        cout << "list is only one element , deleting this element will delete the list \n" ;
+        delete head ; 
+        return ; 
+      }
+
+      while (temp_node->next != tail  )
+      {
+        temp_node = temp_node->next;  
+      }
+
+
+      --list_length ; 
+      
     }
 
     void delete_front(int data )
     {
 
+      if(head == nullptr)
+      {
+        cout << " List is empty , deletion is futile \n";
+      }
+      if ( head == tail )
+      {
+        cout << " one element in the list , deleting whole list\n" ;
+      }
+      // the above code can be replaced with single assert line 
+      assert(list_length); // check if the list is not empty 
+
+
+      --list_length ; 
     }
+
+
+    
+//END OF  Deleting  ( removing ) operations section
+////////////////////////////////////////////// //////////////////////////////////////////////
+
+
 
     //////////// Searching Section //////////////////////////////// 3 Methods (get_position -> based on given postion  )
                                                                             // ( search_v1 based on iterating   )
