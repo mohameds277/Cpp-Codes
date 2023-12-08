@@ -17,10 +17,12 @@ using std::ostringstream;
 using std::vector;
 using std::find;
 
+
+
 struct Node // 8 bytes total ( 4 bytes for data , )
 {
   int data{} ;                // initialized to zero to prevent garbage value initialization
-  struct Node *next {};
+  struct Node *next{nullptr};       // initialized to nullptr to prevent wild pointers 
 
   Node(int data) : data(data) {}     // every time a new node is constructed then
                                                 // a node with data and next is nulled like below node
@@ -61,7 +63,7 @@ class Linked_list
 
     vector<Node*> debug_data;   // backup , vector stores in it each struct node in term of list corruption . 
 
-
+    //debugging functions
     void add_node_vector(Node* node)
     {
       debug_data.push_back(node);
@@ -74,7 +76,7 @@ class Linked_list
 			cout << "Node does not exist\n";
 		else
 			debug_data.erase(delete_target);
-	}
+	  }
 
   public:
 
@@ -100,12 +102,17 @@ class Linked_list
     
     while (head)
     {
+
       Node *temp_target_node = head->next; 
       delete head ; // HEADSHOT the head  
       head = temp_target_node ; // new target 
+
     }
   }
 
+
+
+///////////////printing functions
   void print_head()
   {
     cout << "head address : " <<  head << endl; 
@@ -117,7 +124,7 @@ class Linked_list
   {
     cout << "tail address : " <<  tail << endl; 
     cout << "tail data : " << tail->data << endl;  
-     }
+  }
 
   void print()
   {
@@ -166,7 +173,7 @@ class Linked_list
         cout << "\n";
     }
 
-
+// appending ( inserting ) functions
     void append_end(int data)           // only the tail will be used
     {
       Node *new_node = new Node(data);        // created a new node with value data and next
@@ -197,6 +204,7 @@ class Linked_list
       if (!head)
       {
         head = tail = new_node ; 
+        ++list_length; 
       }
       else 
       {
@@ -208,15 +216,40 @@ class Linked_list
 
     }
 
-    void delete_end()       // stand-by ( future work )
+
+    // Deleting functions 
+
+
+    void delete_node(Node *node_to_delete)
     {
+      delete node_to_delete ; 
+      node_to_delete = nullptr; 
+    }
+
+    void delete_front()
+    {
+
+      assert(list_length); // if list is empty , deletion is prohibited
+
+      
+      Node *current_node = head->next ;
+      delete head; 
+      head = current_node;
+
       --list_length;
     }
 
-    void delete_front(int data )
-    {
 
+    void delete_end()       // stand-by ( future work )
+    {
+      if(list_length <= 1 )
+      {
+
+      }
+
+      --list_length;
     }
+
 
     //////////// Searching Section //////////////////////////////// 3 Methods (get_position -> based on given postion  )
                                                                             // ( search_v1 based on iterating   )
@@ -231,7 +264,52 @@ class Linked_list
       return nullptr;
     } //
 
+    Node * get_position_from_back(int position)
+    {
+      assert(list_length);    // check first if the list is not empty 
 
+      if( list_length < position) // check if the position is valid 
+      {
+        return nullptr;
+      }
+      return get_position( list_length - position + 1 ); 
+    }
+
+    bool same_comparision(const Linked_list &list_to_compare) // passed by reference , to save memory instead of making another copy of the object 
+    {
+      Node *head_1 = head;
+      Node *head_2 = list_to_compare.head; 
+
+      while ( head_1 && head_2) // check if both list head is not nulled ( not empty )
+      {
+        if(head_1->data != head_2->data)
+          return false;
+        head_1 = head_1->next;  //update to next nodes  
+        head_2 = head_2->next; 
+      }
+      return !head_1 && !head_2; // to make sure both lists ends with each others 
+    }                             // the logic used is when list 1 and list 2 reach end which is null 
+                                  // the false will be casted to 1 , and 1 && 1 = 1 else 0 false 
+
+
+    bool same_comparision_length_based(const Linked_list &list_to_compare)
+    {
+      if(list_length != list_to_compare.list_length)
+      {
+        return false;
+      }
+
+      Node *head_2 = list_to_compare.head;
+
+      for (Node *current_node = head ; current_node ; current_node = current_node->next )
+      {
+        if(current_node->data != head_2->data )
+          return false;
+         head_2 = head_2->next; 
+      }
+      return true; 
+
+    }
 
     int search_v1(int value) {      // Search in linked_list based on the value , iterates through the lined-list until target is found
       int index = 0;
@@ -276,6 +354,8 @@ class Linked_list
     //////////// Searching Section ENDED ////////////////////////////////
 
 
+
+// integrity functions
     void integrity_verify()
     {
         if ( list_length == 0 )    // EMPTY LIST INTEGRITY TEST 
@@ -366,7 +446,9 @@ int main()
   listA.append_front(13);
   listA.append_front(12);
 
-    string true_values="12 13 1 2 3 4 5 6 534 12134";
+ 
+
+  string true_values = "12 13 1 2 3 4 5 6 534 12134";
   string actual_values = listA.to_string();
   if(true_values != actual_values)
   {
@@ -375,8 +457,10 @@ int main()
     assert(false);  // terminate immediately 
   }
 
-  
+  listA.delete_front();
   listA.print();
+
+
   listA.print_head();
 
   cout << endl;
@@ -409,10 +493,6 @@ int main()
   buffer = listA.to_string();
 
   cout << buffer ; 
-
-
-            
              
-  // base linked_list ADT + ending append + printing list : functional and tested.
   return 0;
 }
