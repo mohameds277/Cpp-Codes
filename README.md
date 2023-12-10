@@ -1,12 +1,11 @@
 # Cpp-Codes
 
-### Work in-progress 
-
+### Work in-progress
 
 ##### implementing C++ data strucutres from scratch.
 
 - [x] Vector
-- [ ] Single Linked-list ( Work-in-progress ) ( Delayed ) 
-- [ ] Double Linked-list (Delayed)
+- [ ] Linked-list ( Work-in-progress ) ( Delayed )
+      --[ ] Single Linked-list
+      --[ ] Double Linked-list
 - [ ] Stack ( Work-in-progress)
-
