@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cassert>
 
-
+//Array-based Stack data structure 
 class Stack{
 
     private : 
