@@ -219,10 +219,10 @@ class Linked_list
     // Deleting functions 
     void delete_node(Node *node_to_delete)
     {
-
       debug_remove_node(node_to_delete);
       delete node_to_delete ; 
       node_to_delete = nullptr; 
+      --list_length;
     }
 
 
@@ -231,24 +231,57 @@ class Linked_list
 
       assert(list_length); // if list is empty , deletion is prohibited
 
-      
-      Node *current_node = head->next ;
-      delete head; 
-      head = current_node;
-
-      --list_length;
+      Node *current_node = head;      
+      head = head->next;              // updating the head 
+      delete_node(current_node) ; 
     }
 
+    
+	Node* get_nth(int n) {
+		int cnt = 0;
+		for (Node* cur = head; cur; cur = cur->next)
+			if (++cnt == n)
+				return cur;
 
-    void delete_end()       // stand-by ( future work )
-    {
-      if(list_length <= 1 )
-      {
+		return nullptr;
+	}
 
-      }
+	void delete_last() {
+		if (list_length <= 1) {
+			delete_front();
+			return;
+		}
+		// Get the node before tail: its order is length-1 node
+		Node* previous = get_nth(list_length - 1);
 
-      --list_length;
-    }
+		delete_node(tail);
+		tail = previous;
+		tail->next = nullptr;
+
+	}
+
+	void delete_nth_node(int n) {
+		if (n < 1 || n > list_length)
+			cout << "Error. No such nth node\n";
+		else if (n == 1)
+			delete_front();
+		else {
+			// Connect the node before nth with node after nth
+			Node* before_nth = get_nth(n - 1);
+			Node* nth = before_nth->next;
+			bool is_tail = nth == tail;
+			// connect before node with after
+			before_nth->next = nth->next;
+			if (is_tail)
+				tail = before_nth;
+
+			delete_node(nth);
+		}
+	}
+    
+    
+
+
 
 
     //////////// Searching Section //////////////////////////////// 3 Methods (get_position -> based on given postion  )
@@ -337,7 +370,7 @@ class Linked_list
       return -1;
     }
 
-    int search_v3(int value) {// same as before optimization but with better code writing convention convention 
+    int search_v3(int value) {// same as before optimization but with better code writing convention  
       int index = 0;                //  previous  node stacked in the for body 
 
       for (Node *current_node = head, *previous_node = nullptr; current_node ; previous_node = current_node, current_node = current_node->next) {
@@ -414,6 +447,7 @@ class Linked_list
 int main()
 {
 
+    cout << "List A " << endl;
   Linked_list listA ; // new list object is created , this list is called listA  \
   // with this list creation we creat head and tail and list_length
 
@@ -493,6 +527,47 @@ int main()
   buffer = listA.to_string();
 
   cout << buffer ; 
-             
+
+
+  cout << endl;
+    cout << "List B " << endl;
+  Linked_list ListB ;
+
+  ListB.append_front(1);
+  ListB.append_front(2);
+
+  ListB.append_front(3);
+
+  ListB.append_front(4);
+
+
+  ListB.print();
+
+  
+
+
+  ListB.delete_front();
+
+  ListB.delete_last();
+
+
+
+            
+  ListB.print();
+
+    cout << "List C " << endl;
+  Linked_list ListC ;
+
+  ListC.append_front(1);
+  ListC.append_front(2);
+  ListC.append_front(3);
+  ListC.append_front(4);
+  ListC.append_front(5);
+
+
+
+  ListC.print();
+  ListC.delete_nth_node(3);
+  ListC.print();
   return 0;
 }
