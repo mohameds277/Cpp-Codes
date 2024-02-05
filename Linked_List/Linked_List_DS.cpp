@@ -1,12 +1,9 @@
-
-//Building block of each node of the linked list
 #include<iostream>
 #include<cassert>
 #include<string>
 #include<sstream>
 #include<algorithm>
 #include<vector>
-
 
 
 using std::endl;
@@ -18,8 +15,8 @@ using std::vector;
 using std::find;
 
 
-
-struct Node // 8 bytes total ( 4 bytes for data , )
+//Building block of each node of the linked list
+struct Node //
 {
   int data{} ;                // initialized to zero to prevent garbage value initialization
   struct Node *next{nullptr};       // initialized to nullptr to prevent wild pointers 
@@ -57,10 +54,12 @@ class Linked_list
     //good for performance instead of
     //traversing the whole list if the target is the rear end of the list
 
-    int list_length{} ;     // new idea : thinking in-progress
+    int list_length{} ;     // list size ( changes based on the size of the list )
 
 
 
+
+ //optional for debugging ( to preserve the data while testing )
     vector<Node*> debug_data;   // backup , vector stores in it each struct node in term of list corruption . 
 
     //debugging functions
@@ -93,7 +92,7 @@ class Linked_list
   {
     cout << "\nclearing the list from memory  ..... \n" ; 
     
-    //HEADSHOT
+    //HEAD-SHOT
     // destroying nodes from the start to the end 
     //make a temp node , assign it to the next node after the head node ->  shoot the head -> put a next target ( assign head into current )
     // Repeat the KILLING STREAK 
@@ -104,13 +103,10 @@ class Linked_list
     {
 
       Node *temp_target_node = head->next; 
-      delete head ; // HEADSHOT the head  
+      delete head ; // HEAD-SHOT the head  
       head = temp_target_node ; // new target 
-
     }
   }
-
-
 
 ///////////////printing functions
   void print_head()
@@ -198,6 +194,8 @@ class Linked_list
 
     void append_front(int data)
     {
+
+
       Node *new_node = new Node(data);
       new_node->next = nullptr;
 
@@ -213,18 +211,20 @@ class Linked_list
         ++list_length; 
       }
 
+      Linked_list:add_node_vector(new_node);
 
     }
 
 
     // Deleting functions 
-
-
     void delete_node(Node *node_to_delete)
     {
+
+      debug_remove_node(node_to_delete);
       delete node_to_delete ; 
       node_to_delete = nullptr; 
     }
+
 
     void delete_front()
     {
