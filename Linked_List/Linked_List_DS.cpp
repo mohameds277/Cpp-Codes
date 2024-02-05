@@ -278,6 +278,41 @@ class Linked_list
 			delete_node(nth);
 		}
 	}
+
+
+    bool interv_1_func(Node *node_to_delete)
+    {
+      if(node_to_delete == tail )
+      {
+        return false ; // making sure that the given node is not the last node ( to prevent segfault error )
+      }
+
+      node_to_delete->data = node_to_delete->next->data ; // the next node data goes for the target node 
+      Node *temp_node = node_to_delete->next ; 
+      node_to_delete->next = node_to_delete->next->next ; 
+      delete temp_node;
+      return  true;
+    }
+
+    // function that makes sure that the list elements are descending (biggest to the lowest )
+    bool interview_question_2(Node* node) 
+    {
+	        return !node || !node->next || node->data > node->next->data && interview_question_2(node->next);
+    }
+
+
+    // Recursive list reverse ( Reverse the  sub-list elements without head or tail  ) , need to swap the head with the tail to complete the reverse 
+    Node* f(Node* current_node) 
+    {
+	      if (current_node && current_node->next) 
+        {
+		      Node* sub_list = f(current_node->next);
+		      sub_list->next = current_node;
+		      current_node->next = nullptr;
+	      }
+	    return current_node;
+    }
+
     
     
 
@@ -569,5 +604,69 @@ int main()
   ListC.print();
   ListC.delete_nth_node(3);
   ListC.print();
+
+
+
+  cout << "List D " << endl;
+
+
+
+  Linked_list ListD;
+
+  ListD.append_end(1);
+  ListD.append_end(2);
+  ListD.append_end(3);
+  ListD.append_end(4);
+  ListD.append_end(5);
+
+
+   ListD.print();
+
+
+
+  cout << "interview question 1 case 1 " << endl;
+  bool is = ListD.interv_1_func(ListD.get_position(1));
+  if(is) 
+      ListD.print();
+  else
+    cout << "interview question function failed (called the function with empty or last element in the list )";
+
+
+  cout << "interview question 1 case 2 " << endl;
+
+    is = ListD.interv_1_func(ListD.get_position(2));
+  if(is) 
+      ListD.print();
+  else
+    cout << "interview question function failed (called the function with empty or last element in the list )";
+
+
+  cout << "interview question 1 case 3 " << endl;
+
+    is = ListD.interv_1_func(ListD.get_position(3));
+  if(is) 
+      ListD.print();
+  else
+    cout << "interview question function failed (called the function with empty or last element in the list ) \n ";
+
+  cout << " List E test " << endl;
+  Linked_list ListE;
+
+  ListE.append_end(5);
+  ListE.append_end(4);
+  ListE.append_end(3);
+  ListE.append_end(2);
+  ListE.append_end(1);
+
+  ListE.print();
+
+  bool is_2 = ListE.interview_question_2(ListE.get_nth(1));
+
+  if (is_2)
+    cout << "List is sorted in descendant order " << endl;
+  else
+    cout << "List is not  sorted in descendant order " << endl;
+
+  cout << "-------------- program life span is complete , clearing all lists from memory------------------ \n";
   return 0;
 }
