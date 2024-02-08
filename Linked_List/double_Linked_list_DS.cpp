@@ -53,9 +53,6 @@ class D_Linked_list
 //              ----------------------------
 
 
-
-
-
         Node *tail{nullptr};
 
                     // Tail 
@@ -105,6 +102,14 @@ class D_Linked_list
             cout << "\n";
         }
 
+        
+        void print_reversed()  {
+            for (Node* cur = tail; cur; cur = cur->previous)
+                cout << cur->data << " ";
+            cout << "\n";
+        }
+
+        // backup functions
         void delete_node(Node* node) {
             debug_remove_node(node);
             --list_length;
@@ -116,12 +121,102 @@ class D_Linked_list
             ++list_length;
         }
 
-        void print_reversed()  {
-            for (Node* cur = tail; cur; cur = cur->previous)
-                cout << cur->data << " ";
-            cout << "\n";
+        // Linker function ( IMPORTANT FUNCTION THAT DISTINGUISH SINGLE LINKED LIST from THE DOUBLE  )
+
+        void nodes_linker(Node *pre_node , Node *post_node)
+        {
+            if(pre_node) pre_node->next = post_node;
+            if(post_node) post_node->previous = pre_node ; 
         }
 
 
+        // Double linked-list ADT operations 
+
+        //1) Insertion operations
+
+
+        void insert_front(int data )
+        {
+            Node *inserted_node = new Node(data);
+
+            if(!head) head = tail = inserted_node ;
+            else 
+            {
+                nodes_linker(inserted_node , head);
+                head = inserted_node ; 
+            } 
+        }
+
+        void insert_end(int data )
+        {
+            Node *inserted_node = new Node(data);
+            debug_add_node(inserted_node);
+
+            if(!head)
+            {
+                head = tail = inserted_node ;
+            }
+            else 
+            {
+                nodes_linker(tail ,inserted_node );
+                tail = inserted_node;
+            }
+            ++list_length;
+
+        }
 };
 
+
+
+int main()
+{
+    D_Linked_list DL1 ; 
+
+    DL1.insert_end(1);
+    DL1.insert_end(2);
+    DL1.insert_end(3);
+    DL1.insert_end(4);
+    DL1.insert_end(5);
+    DL1.insert_end(6);
+    DL1.insert_end(7);
+
+
+    DL1.print();
+    DL1.print_reversed();
+
+    D_Linked_list DL2 ;
+
+    DL2.insert_front(1); 
+    DL2.insert_front(2); 
+    DL2.insert_front(3); 
+    DL2.insert_front(4); 
+    DL2.insert_front(5); 
+    DL2.insert_front(6); 
+    DL2.insert_front(7);
+
+
+    DL2.print();
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    return 0; 
+}
