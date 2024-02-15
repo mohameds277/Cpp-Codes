@@ -9,3 +9,5 @@
   - [x] Single Linked-list
   - [ ] Double Linked-list
 - [ ] Stack ( Work-in-progress)
+- [ ] Queue 
+- [ ] Trees 
