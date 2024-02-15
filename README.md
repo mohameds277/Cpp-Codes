@@ -11,3 +11,5 @@
 - [ ] Stack ( Work-in-progress)
 - [ ] Queue 
 - [ ] Trees 
+- [ ] Heap
+- [ ] Hash
