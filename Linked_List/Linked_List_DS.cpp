@@ -222,6 +222,8 @@ class Linked_list
       debug_remove_node(node_to_delete);
       delete node_to_delete ; 
       node_to_delete = nullptr; 
+
+
       --list_length;
     }
 
@@ -280,41 +282,7 @@ class Linked_list
 	}
 
 
-    bool interv_1_func(Node *node_to_delete)
-    {
-      if(node_to_delete == tail )
-      {
-        return false ; // making sure that the given node is not the last node ( to prevent segfault error )
-      }
 
-      node_to_delete->data = node_to_delete->next->data ; // the next node data goes for the target node 
-      Node *temp_node = node_to_delete->next ; 
-      node_to_delete->next = node_to_delete->next->next ; 
-      delete temp_node;
-      return  true;
-    }
-
-    // function that makes sure that the list elements are descending (biggest to the lowest )
-    bool interview_question_2(Node* node) 
-    {
-	        return !node || !node->next || node->data > node->next->data && interview_question_2(node->next);
-    }
-
-
-    // Recursive list reverse ( Reverse the  sub-list elements without head or tail  ) , need to swap the head with the tail to complete the reverse 
-    Node* f(Node* current_node) 
-    {
-	      if (current_node && current_node->next) 
-        {
-		      Node* sub_list = f(current_node->next);
-		      sub_list->next = current_node;
-		      current_node->next = nullptr;
-	      }
-	    return current_node;
-    }
-
-
-    
     
 
 
@@ -477,7 +445,102 @@ class Linked_list
       return oss.str();
 
     }
+
+
+  // Extra + Interview questions 
+    bool interv_1_func(Node *node_to_delete)
+    {
+      if(node_to_delete == tail )
+      {
+        return false ; // making sure that the given node is not the last node ( to prevent segfault error )
+      }
+
+      node_to_delete->data = node_to_delete->next->data ; // the next node data goes for the target node 
+      Node *temp_node = node_to_delete->next ; 
+      node_to_delete->next = node_to_delete->next->next ; 
+      delete temp_node;
+      return  true;
+    }
+
+    // function that makes sure that the list elements are descending (biggest to the lowest )
+    bool interview_question_2(Node* node) 
+    {
+	        return !node || !node->next || node->data > node->next->data && interview_question_2(node->next);
+    }
+
+
+    // Recursive list reverse ( Reverse the  sub-list elements without head or tail  ) , need to swap the head with the tail to complete the reverse 
+    Node* f(Node* current_node) 
+    {
+	      if (current_node && current_node->next) 
+        {
+		      Node* sub_list = f(current_node->next);
+		      sub_list->next = current_node;
+		      current_node->next = nullptr;
+	      }
+	    return current_node;
+    }
+
+
+  //////delete by key function 
+  //helper function , takes the previous node to link it with the rest of the list without the target key node , then deleted the target node 
+  void delete_then_connect(Node *node_to_link)
+  {
+    Node *deleted_key_node  =  node_to_link->next ; 
+
+    //linking process
+    node_to_link->next = node_to_link->next->next; // replace the link of the deleted node with the it's next neighbour 
+
+    delete_node(deleted_key_node);
+  }
+
+  void delete_by_key(int key)
+  {
+    // First we need to search for the targeted node to be deleted.
+    // then we need to delete the targeted key node and link the gap again.
+    // some cases like empty list or one element list will be checked and handled if satisfied  
+    // for loop to run through the whole list , in it a previous node is initalized ( sent to helper function to jump link it with the rest of the list  and deletes the key node )
+
+    if ( !head ) return; // empty list , deletion is prevented  
+
+    else if ( head->data == key  ) // one element list case  
+    {
+      delete_front();
+      return ; 
+    }
+
+
+    for(Node *current_node{head} ,  *previous_node{nullptr}  ; current_node ; previous_node = current_node  , current_node = current_node->next)
+    {
+      if (current_node->data == key) 
+      {
+        delete_then_connect(previous_node);
+        return;
+      }
+    }
+    cout << "Key not found in the list\n";
+    integrity_verify();
+  }
+
+
+
+  //swap function ( swaps neighboring paris ) Time : O(n) , space : O(1) 
+  void swap_neighbors()
+  {
+    for(Node* current_node = head ; current_node ; current_node = current_node= current_node->next)
+    {
+        if(current_node->next)
+        {
+          swap(current_node->data, current_node->next->data);
+          current_node = current_node->next;
+        }
+    }
+    
+  }
+
 };
+
+
 
 
 int main()
@@ -686,7 +749,25 @@ int main()
   ListF.print();
 
 
+  Linked_list ListG ; 
 
+
+  cout << " List G test " << endl;
+
+    
+  ListG.append_end(1);
+  ListG.append_end(2);
+  ListG.append_end(3);
+  ListG.append_end(4);
+  ListG.append_end(5);
+
+
+  ListG.print();
+
+  ListG.delete_by_key(5);
+
+
+  ListG.print();
 
   return 0;
 }
